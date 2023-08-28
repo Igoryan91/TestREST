@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="${user.getUsername()}"> VALUE
-    </title>
+    <meta charset="UTF-8">
+    <title>Пользователи</title>
 
     <style>
         table {
@@ -28,7 +27,6 @@
         }
     </style>
 
-</head>
 <body>
 <table class="collapsed">
     <thead>
@@ -38,15 +36,25 @@
         <th scope="col">Год рождения</th>
         <th scope="col">Никнейм</th>
         <th scope="col">Почта</th>
+        <th scope="col">Управление</th>
     </tr>
     </thead>
     <tbody>
-    <tr>
+    <tr th:each="user : ${users}">
         <td th:text="${user.getName()}"></td>
         <td th:text="${user.getSurname()}"></td>
         <td th:text="${user.getYearOfBirth()}"></td>
         <td th:text="${user.getUsername()}"></td>
         <td th:text="${user.getEmail()}"></td>
+        <td>
+            <form th:action="@{/admin/{username}(username=${user.getUsername()})}">
+                <input type="submit" value="Изменить"/>
+            </form>
+
+            <form th:method="DELETE" th:action="@{/admin/{id}(id=${user.getId()})}">
+                <input type="submit" value="Удалить"/>
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>
