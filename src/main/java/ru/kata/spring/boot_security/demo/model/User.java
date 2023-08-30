@@ -19,7 +19,7 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "username", unique = true)
+    @Column(name = "username")
     @NotEmpty(message = "Никнейм не должен быть пустым")
     @Size(min = 2, max = 30, message = "Никнейм должен быть от 2 до 30 символов")
     private String username;
