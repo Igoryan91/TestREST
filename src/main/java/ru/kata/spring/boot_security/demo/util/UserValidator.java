@@ -24,7 +24,7 @@ public class UserValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         User user = (User) target;
-        if (userService.getUser(user.getUsername()) == null)
+        if (userService.getUser(user.getId()) == null)
             return;
         errors.rejectValue("username", "", "Это имя пользователя уже занято");
     }

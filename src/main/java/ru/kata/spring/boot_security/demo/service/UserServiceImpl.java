@@ -11,6 +11,7 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -43,8 +44,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUser(String username) {
-        return userRepository.findByUsername(username);
+    public Optional<User> getUser(int id) {
+        return userRepository.findById(id);
     }
 
     @Override
@@ -54,16 +55,15 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void updateUser(String usernameUpdatingUser, User updatedUser){
-        System.out.println(updatedUser.getPassword() == null);
-        if (updatedUser.getPassword().equals("")) {
-            updatedUser
-                    .setPassword(userRepository.findByUsername(usernameUpdatingUser).getPassword());
+    public void updateUser(int id, User user){
+        if (user.getPassword().equals("")) {
+            user
+                    .setPassword(userRepository.getById(id).getPassword());
         } else {
-            updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
-        updatedUser.setId(userRepository.findByUsername(usernameUpdatingUser).getId());
-        userRepository.save(updatedUser);
+        user.setId(id);
+        userRepository.save(user);
     }
 
     @Transactional

@@ -5,15 +5,16 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import ru.kata.spring.boot_security.demo.model.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService extends UserDetailsService {
     void saveUser(User user);
 
-    User getUser(String username);
+    Optional<User> getUser(int id);
 
     List<User> getAllUsers();
 
-    void updateUser(String usernameUpdatingUser, User updatedUser);
+    void updateUser(int id, User updatedUser);
 
     void removeUser(int id);
 }
